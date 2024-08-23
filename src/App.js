@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Modal from "./Modal/Modal";
-import { noRecipeImage } from './Resource/noRecipeImage'; 
-import audio from "./Resource/ding.mp3";
-
+import { noRecipeImage } from "./Resource/noRecipeImage";
+import dingSfx from "./Resource/ding.mp3";
+import pageSfx from "./Resource/pageTurn.mp3";
 
 function App() {
   const [data, setData] = useState(null);
@@ -17,8 +17,11 @@ function App() {
     tag: "",
     image: "",
   });
+  const [canPlayAudio, setStart] = useState(false);
+  const [hoverTimeout, setHoverTimeout] = useState(null);
 
-  const dingAudio = new Audio(audio);
+  const dingAudio = new Audio(dingSfx);
+  const pageAudio = new Audio(pageSfx);
 
   useEffect(() => {
     getRecipeList();
@@ -114,9 +117,24 @@ function App() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       }
     );
+  };
+
+  const handleMouseEnter = () => {
+    if (canPlayAudio) {
+      const timeout = setTimeout(() => {
+        pageAudio.play().catch((error) => console.log('Failed to play audio:', error));
+      }, 400);
+      setHoverTimeout(timeout);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+    }
   };
 
   const addRecipe = async (e) => {
@@ -165,98 +183,111 @@ function App() {
           <button
             class="add"
             onClick={() => {
-              dingAudio.play();
-              setFormData({
-                id: "",
-                title: "",
-                description: "",
-                tag: "",
-                image: "",
-              });
-              setIsModalOpen(true);
+              if (canPlayAudio) {
+                dingAudio.play();
+                setFormData({
+                  id: "",
+                  title: "",
+                  description: "",
+                  tag: "",
+                  image: "",
+                });
+                setIsModalOpen(true);
+              } else {
+                setStart(true);
+                dingAudio.play();
+              }
             }}
           >
-            Add New Recipe
+            {canPlayAudio ? "Add New Recipe" : "Start"}
           </button>
         </div>
-        <div class="scroll">
-          <section class="card-area">
-            {data.map((e, idx) => (
-              <section class="card-section">
-                <div class="card">
-                  <div class="flip-card">
-                    <div class="flip-card__container">
-                      <div class="card-front">
+        {canPlayAudio ? (
+          <div class="scroll">
+            <section class="card-area">
+              {data.map((e, idx) => (
+                <section class="card-section"                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}>
+                  <div class="card">
+                    <div class="flip-card">
+                      <div class="flip-card__container">
                         <div
-                          class={`card-front__tp card-front__tp--${
-                            color[idx % 4]
-                          }`}
+                          class="card-front"
+           
                         >
-                          <img
-                            class="card-front__icon"
-                            src={!!e.image ? e.image : noRecipeImage}
-                            alt="recipe"
-                          />
-
-                          <h2 class="card-front__heading">
-                            {truncateText(e.title, 15)}
-                          </h2>
-                          <p class="card-front__text-price">
-                            {truncateText(e.tag, 15)}
-                          </p>
-                        </div>
-
-                        <div class="card-front__bt">
-                          <p
-                            class={`card-front__text-view card-front__text-view--${
+                          <div
+                            class={`card-front__tp card-front__tp--${
                               color[idx % 4]
                             }`}
                           >
-                            View me
-                          </p>
+                            <img
+                              class="card-front__icon"
+                              src={!!e.image ? e.image : noRecipeImage}
+                              alt="recipe"
+                            />
+
+                            <h2 class="card-front__heading">
+                              {truncateText(e.title, 15)}
+                            </h2>
+                            <p class="card-front__text-price">
+                              {truncateText(e.tag, 15)}
+                            </p>
+                          </div>
+
+                          <div class="card-front__bt">
+                            <p
+                              class={`card-front__text-view card-front__text-view--${
+                                color[idx % 4]
+                              }`}
+                            >
+                              View me
+                            </p>
+                          </div>
+                        </div>
+                        <div class="card-back">
+                          {
+                            <img
+                              class="back-img"
+                              src={!!e.image ? e.image : noRecipeImage}
+                              alt="recipe"
+                            />
+                          }
                         </div>
                       </div>
-                      <div class="card-back">
-                        {
-                          <img
-                            class="back-img"
-                            src={!!e.image ? e.image : noRecipeImage}
-                            alt="recipe"
-                          />
-                        }
+                    </div>
+
+                    <div class="inside-page">
+                      <div class="inside-page__container">
+                        <h3
+                          class={`inside-page__heading inside-page__heading--${
+                            color[idx % 4]
+                          }`}
+                        >
+                          {truncateText(e.title, 10)}
+                        </h3>
+                        <p class="inside-page__text">{e.description}</p>
+                        <a
+                          onClick={() => {
+                            dingAudio.play();
+                            setFormData(e);
+                            setIsModalOpen(true);
+                          }}
+                          class={`inside-page__btn inside-page__btn--${
+                            color[idx % 4]
+                          }`}
+                        >
+                          Edit
+                        </a>
                       </div>
                     </div>
                   </div>
-
-                  <div class="inside-page">
-                    <div class="inside-page__container">
-                      <h3
-                        class={`inside-page__heading inside-page__heading--${
-                          color[idx % 4]
-                        }`}
-                      >
-                        {truncateText(e.title, 10)}
-                      </h3>
-                      <p class="inside-page__text">{e.description}</p>
-                      <a
-                        onClick={() => {
-                          dingAudio.play();
-                          setFormData(e);
-                          setIsModalOpen(true);
-                        }}
-                        class={`inside-page__btn inside-page__btn--${
-                          color[idx % 4]
-                        }`}
-                      >
-                        Edit
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            ))}
-          </section>
-        </div>
+                </section>
+              ))}
+            </section>
+          </div>
+        ) : (
+          ""
+        )}
       </main>
       <Modal isOpen={isModalOpen} onClose={closeModal} title="Recipe">
         {isModalOpen ? (
@@ -349,4 +380,3 @@ function App() {
   );
 }
 export default App;
-    
