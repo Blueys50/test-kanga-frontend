@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Blueys50/test-kanga-frontend/static/css/main.49289af6.css",
-    "main.js": "/Blueys50/test-kanga-frontend/static/js/main.2525068a.js",
-    "static/js/453.5118ca15.chunk.js": "/Blueys50/test-kanga-frontend/static/js/453.5118ca15.chunk.js",
-    "index.html": "/Blueys50/test-kanga-frontend/index.html",
-    "main.49289af6.css.map": "/Blueys50/test-kanga-frontend/static/css/main.49289af6.css.map",
-    "main.2525068a.js.map": "/Blueys50/test-kanga-frontend/static/js/main.2525068a.js.map",
-    "453.5118ca15.chunk.js.map": "/Blueys50/test-kanga-frontend/static/js/453.5118ca15.chunk.js.map"
+    "main.css": "/test-kanga-frontend/static/css/main.49289af6.css",
+    "main.js": "/test-kanga-frontend/static/js/main.61116f24.js",
+    "static/js/453.5118ca15.chunk.js": "/test-kanga-frontend/static/js/453.5118ca15.chunk.js",
+    "index.html": "/test-kanga-frontend/index.html",
+    "main.49289af6.css.map": "/test-kanga-frontend/static/css/main.49289af6.css.map",
+    "main.61116f24.js.map": "/test-kanga-frontend/static/js/main.61116f24.js.map",
+    "453.5118ca15.chunk.js.map": "/test-kanga-frontend/static/js/453.5118ca15.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49289af6.css",
-    "static/js/main.2525068a.js"
+    "static/js/main.61116f24.js"
   ]
 }
