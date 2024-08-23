@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/test-kanga-frontend/static/css/main.49289af6.css",
-    "main.js": "/test-kanga-frontend/static/js/main.61116f24.js",
+    "main.js": "/test-kanga-frontend/static/js/main.98b5eb23.js",
     "static/js/453.5118ca15.chunk.js": "/test-kanga-frontend/static/js/453.5118ca15.chunk.js",
+    "static/media/ding.mp3": "/test-kanga-frontend/static/media/ding.30b54c8aa007775e42a1.mp3",
     "index.html": "/test-kanga-frontend/index.html",
     "main.49289af6.css.map": "/test-kanga-frontend/static/css/main.49289af6.css.map",
-    "main.61116f24.js.map": "/test-kanga-frontend/static/js/main.61116f24.js.map",
+    "main.98b5eb23.js.map": "/test-kanga-frontend/static/js/main.98b5eb23.js.map",
     "453.5118ca15.chunk.js.map": "/test-kanga-frontend/static/js/453.5118ca15.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49289af6.css",
-    "static/js/main.61116f24.js"
+    "static/js/main.98b5eb23.js"
   ]
 }
